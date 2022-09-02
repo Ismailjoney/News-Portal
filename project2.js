@@ -21,21 +21,21 @@ const allNewsCatagory = (news) => {
     });
 }
 
-//
+//onclick function  call :
 const allnewBlog = (id) => {
-    console.log(id);
     fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
     .then(res => res.json())
     .then(data =>  displayNews(data.data))
 }
 
+//onclick function helper
 const displayNews = (news) => {
-    console.log(news);
+  
     const displayNewsBlog = document.getElementById(`displayNewsBlog`);
     displayNewsBlog.innerHTML="";
 
       news.forEach(singleNews =>{
-        console.log(`singleNews`)
+        console.log(singleNews);
         const div = document.createElement(`div`);
         div.innerHTML = `
             <div class="card mb-3" style="max-width: 840px;">
@@ -48,19 +48,48 @@ const displayNews = (news) => {
                         <h5 class="card-title">${singleNews.title}</h5>
                         <p class="card-text">${singleNews.details.slice(0, 340) + ` ....`}</p>
                         
-                        <div class="d-flex align-items-center mt-4">
-                        <img class="news-writer" src="${singleNews.author.img}" class="img-fluid rounded-start" alt="...">
-                        <p class="card-text p-3 fw-bold">${singleNews.author.name ? singleNews.author.name : `no found writer`}</p> 
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <div class="d-flex">
+                                <img class="news-writer" src="${singleNews.author.img}" class="img-fluid rounded-start" alt="...">
+                                <p class="card-text p-3 fw-bold">${singleNews.author.name ? singleNews.author.name : `no found writer`}</p> 
+                            </div>
+                            <div>
+                                <p>view : ${singleNews.total_view ? singleNews.total_view : "no view"} </p>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-success" onclick ="newsDetails('${singleNews._id}')" data-bs-toggle="modal" data-bs-target="#exampleModal">News info</button>
+                        </div>
                         </div>
                     </div>
                 </div>
-            </div>
         
         `;
         displayNewsBlog.appendChild(div)
       })
+ }
 
-}
+  const newsDetails = (idInfo) => {
+    const url = `https://openapi.programming-hero.com/api/news/${idInfo}`;
+    // console.log(a);
+    fetch(url)
+    .then(res => res.json())
+    .then(data => newsAuthurInfo(data.data[0]))
+  }
+
+  const newsAuthurInfo = (authorInfo) => {
+    console.log(authorInfo.author.name)
+     const modalNewsInfo = document.getElementById(`modalNewsInfo`);
+     modalNewsInfo.innerHTML = `
+        <p>Name : ${authorInfo.author.name ? authorInfo.author.name : " no found" }</p>
+        <p>Ratting :Badge : ${authorInfo.rating.badge},  <br><br> Number :  ${authorInfo.rating.number} </p>
+        <p>view : ${authorInfo.total_view ? authorInfo.total_view : "no view"} </p>
+
+
+        `;
+      
+  }
+  
+
  
 
 loadNews();
