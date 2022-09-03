@@ -1,4 +1,4 @@
-const loadNews =() =>{
+const loadNews =(a) =>{
     fetch(`https://openapi.programming-hero.com/api/news/categories`)
     .then(res => res.json())
     .then(data => allNewsCatagory(data.data.news_category))
@@ -12,18 +12,38 @@ const allNewsCatagory = (news) => {
          const newDiv = document.createElement(`div`);
          newDiv.innerHTML = `
          <ul class="nav">
-            <li class="nav-item ">
+            <li class="nav-item" onclick="loadSpiner()">
             <a class="nav-link active loadSpin" aria-current="page" href="#" onclick ="allnewBlog('${allNews.category_id}')">${allNews.category_name}</a>
             </li>
        </ul>
          `;
          allNewsNav.appendChild(newDiv);
+        
     });
+ 
+}
 
-
+ const loadSpiner = (a) =>{
+    const s = toogleSpiner(true);
+    
+ }
+ 
+ 
+ 
+const toogleSpiner = (isLoding)=>{
+    const spinner = document.getElementById('loadingSpin');
+    if(isLoding === true){
+        spinner.classList.remove('d-none')
+    }
+    else{
+        spinner.classList.add('d-none'); 
+    }
 }
 
 
+ 
+ 
+  
 //onclick function  call :
 const allnewBlog = (id) => {
     fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
