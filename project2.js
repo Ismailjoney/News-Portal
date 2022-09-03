@@ -5,10 +5,10 @@ const loadNews =(a) =>{
 }
 
 const allNewsCatagory = (news) => {
-    // console.log(news);
+ 
     const allNewsNav = document.getElementById(`allNewsNav`);
     news.forEach(allNews => {
-        // console.log(allNews)
+ 
          const newDiv = document.createElement(`div`);
          newDiv.innerHTML = `
          <ul class="nav">
@@ -113,12 +113,6 @@ const displayNews = (news) => {
         `;
       
   }
- 
-  
- 
-
-
-
  
 
 loadNews();
