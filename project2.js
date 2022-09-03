@@ -11,7 +11,7 @@ const allNewsCatagory = (news) => {
         // console.log(allNews)
          const newDiv = document.createElement(`div`);
          newDiv.innerHTML = `
-         <ul class="nav   ">
+         <ul class="nav">
             <li class="nav-item ">
             <a class="nav-link active loadSpin" aria-current="page" href="#" onclick ="allnewBlog('${allNews.category_id}')">${allNews.category_name}</a>
             </li>
@@ -24,7 +24,6 @@ const allNewsCatagory = (news) => {
 }
 
 
- 
 //onclick function  call :
 const allnewBlog = (id) => {
     fetch(`https://openapi.programming-hero.com/api/news/category/${id}`)
