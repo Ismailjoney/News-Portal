@@ -1,4 +1,4 @@
-const loadNews =() =>{
+const loadNews =(value) =>{
     fetch(`https://openapi.programming-hero.com/api/news/categories`)
     .then(res => res.json())
     .then(data => allNewsCatagory(data.data.news_category))
@@ -7,12 +7,13 @@ const loadNews =() =>{
 const allNewsCatagory = (news) => {
  
     const allNewsNav = document.getElementById(`allNewsNav`);
+    allNewsNav.innerHTML = "";
     news.forEach(allNews => {
  
          const newDiv = document.createElement(`div`);
          newDiv.innerHTML = `
          <ul class="nav">
-            <li class="nav-item" onclick="loadSpiner()">
+            <li class="nav-item" onclick="loadSpiner( )">
             <a class="nav-link active loadSpin" aria-current="page" href="#" onclick ="allnewBlog('${allNews.category_id}')">${allNews.category_name}</a>
             </li>
        </ul>
@@ -20,16 +21,16 @@ const allNewsCatagory = (news) => {
          allNewsNav.appendChild(newDiv);
         
     });
- 
+    toogleSpiner(false);
 }
-
- const loadSpiner = (a) =>{
-    const s = toogleSpiner(true);
+//onclick func ...
+ const loadSpiner = () =>{
+     const spinner = toogleSpiner(true);
+     loadNews(spinner)
     
  }
  
- 
- 
+ //global func.. use in onclick func.. 
 const toogleSpiner = (isLoding)=>{
     const spinner = document.getElementById('loadingSpin');
     if(isLoding === true){
